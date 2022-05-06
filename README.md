@@ -1,4 +1,5 @@
-# lrm-i
+# lrk-i
+Там ниже пиндоская хрень фу фу не православно
 
 ## Project setup
 ```
@@ -14,6 +15,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

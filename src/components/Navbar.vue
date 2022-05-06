@@ -3,7 +3,7 @@
         <h1>LRM-I</h1>
         <div class="links">
             <!-- <router-link to="/users"><font-awesome-icon icon="users" />Участники</router-link> -->
-            <a href="https://github.com/LRM-I"><font-awesome-icon :icon="['fab', 'github-alt']" />GitHub</a>
+            <a href="https://github.com/LRK-I"><font-awesome-icon :icon="['fab', 'github-alt']" />GitHub</a>
         </div>
     </div>
 </template>

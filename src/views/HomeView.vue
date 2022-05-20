@@ -17,7 +17,7 @@
       </div>
       <h2 style="margin-top: 40px;">Основатели</h2>
       <div class="founders">
-        <FounderComponent v-for="item in founders" :key="item" :icon="`https://cdn.discordapp.com/avatars/${item.id}/${item.avatar}.${item.avatar.startsWith('a_') ? 'gif' : 'png'}?size=80`" :name="`${item.username}#${item.discriminator}`"/>
+        <FounderComponent v-for="item in founders" :key="item" :icon="item.avatar ? `https://cdn.discordapp.com/avatars/${item?.id}/${item?.avatar}.${item.avatar?.startsWith('a_') ? 'gif' : 'png'}?size=80` : 'https://cdn.discordapp.com/attachments/917528169374961725/977303692694945812/92cc0d1a1d9986873156587b2b723ce6.jpg'" :name="`${item.username}#${item.discriminator}`"/>
       </div>
     </div>
   </div>

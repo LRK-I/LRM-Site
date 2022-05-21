@@ -4,11 +4,9 @@
             <div class="home container pollGrid">
                 <div class="pollRight">
                     <h2>Опрос: {{ name }}</h2>
-                    <br>
-                    <InputComponent v-model="uid" text="Введите Discord ID" v-on:newText="validate"/>
                     <br><br>
                     <transition name="fade" mode="out-in">
-                        <ButtonComponent @click="start" :key="message" :text="!message ? 'Введите Discord ID' : message" :bstyle="style"/>
+                        <ButtonComponent @click="start" :key="message" :text="!message ? 'Происходит валидация...' : message" :bstyle="style"/>
                     </transition>
                 </div>
                 <div class="pollLeft">
@@ -32,25 +30,21 @@ import ButtonComponent from '@/components/ButtonComponent.vue';
 export default {
   name: 'PollStart',
   components: { InputComponent, ButtonComponent, ButtonComponent },
-  data: () => ({
-    uid: '',
-    name: '',
-    questionsNum: 0,
-    isAnonymous: false,
-    alreadyPast: 0,
-    authors: '',
-    style: 'default',
-    message: '',
-    loaded: false
-  }),
+  data() {
+    return {
+        uid: this.$store.getters.user?.id,
+        name: '',
+        questionsNum: 0,
+        isAnonymous: false,
+        alreadyPast: 0,
+        authors: '',
+        style: 'default',
+        message: '',
+        loaded: false
+    }
+  },
   methods: {
-    async validate(id) {
-        if(!/\d{16,18}/.test(id)) {
-            this.style = 'danger';
-            this.message = 'Неверный формат ID';
-            return false;
-        }
-        this.uid = id;
+    async validate() {
         const data = await (await fetch(`https://senko.ga/api/poll/validate/${this.uid}`)).json();
         if (!data.valid) {
             this.style = 'danger';
@@ -62,19 +56,20 @@ export default {
         return true;
     },
     async start() {
-        if (!await this.validate(this.uid)) return;
-        const data = await (await fetch(`https://senko.ga/api/poll/${this.$route.params.id}/start`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user: this.uid }) })).json();
+        if (!await this.validate()) return;
+        const data = await (await fetch(`https://senko.ga/api/poll/${this.$route.params.id}/start`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userToken: localStorage.getItem('userToken') }) })).json();
         if (data.granted) {
             console.log(data);
             localStorage.setItem('token', data.token);
-            localStorage.setItem('uid', this.uid);
             localStorage.setItem('expireAt', data.expireTimestamp);
+            localStorage.setItem('currentPoll', this.$route.params.id);
 
             this.$router.push(`/poll/${this.$route.params.id}/question/0`);
         }
     }
   },
   async mounted() {
+    if (!this.$store.getters.user) return window.location.href = 'https://senko-info.ga/authorize';
     const request = await fetch(`https://senko.ga/api/poll/${this.$route.params.id}`);
     const data = await request.json();
     if (data.message === 'Опроса с таким айди нету') {
@@ -87,6 +82,7 @@ export default {
     this.alreadyPast = data.alreadyPast;
     this.authors = data.authors;
     this.loaded = true;
+    await this.validate();
   }
 }
 </script>

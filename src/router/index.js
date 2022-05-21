@@ -4,6 +4,7 @@ import PollStart from '../views/Poll.Start.vue'
 import PollQuestions from '../views/Poll.Questions.vue'
 import PollEnd from '../views/Poll.End.vue'
 import NotFound from '../views/404.vue'
+import AuthEnd from '../views/Auth.End.vue'
 
 const routes = [
   {
@@ -22,6 +23,10 @@ const routes = [
     path: '/poll/end',
     name: 'poll-end',
     component: PollEnd
+  },{
+    path: '/complete/:token',
+    name: 'auth',
+    component: AuthEnd
   }, {
     path: '/:pathMatch(.*)',
     component: NotFound

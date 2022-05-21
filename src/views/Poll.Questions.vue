@@ -49,13 +49,14 @@ export default {
     error: ''
   }),
   async mounted() {
+    if (!this.$store.getters.user) return window.location.href = 'https://senko-info.ga/authorize';
     const pollInfoRaw = await fetch(`https://senko.ga/api/poll/${this.$route.params.id}`);
     const dataRaw = await fetch(`https://senko.ga/api/poll/${this.$route.params.id}/question/${this.$route.params.question}`);
     const pollInfo = await pollInfoRaw.json();
     const data = await dataRaw.json();
     this.name = pollInfo.name;
     this.allQuestions = pollInfo.questions;
-    if (!pollInfo.ok) {
+    if (pollInfo.message === 'Опроса с таким айди нету') {
         this.$router.push('/404');
         return;
     }
@@ -84,7 +85,7 @@ export default {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                user: localStorage.getItem('uid'),
+                userToken: localStorage.getItem('userToken'),
                 token: localStorage.getItem('token'),
                 answer: id,
             }),

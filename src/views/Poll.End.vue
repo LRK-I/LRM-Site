@@ -20,11 +20,12 @@ export default {
       }),
     });
 
-    localStorage.removeItem('currentPoll');
     localStorage.removeItem('expireAt');
     localStorage.removeItem('token');
     setTimeout(() => {
-      this.$router.push('/');
+      this.$router.push(`https://senko.ga/api/poll/${localStorage.getItem('currentPoll')}`).then(() => {
+        localStorage.removeItem('currentPoll');
+      });
     }, 5000);
   }
 }

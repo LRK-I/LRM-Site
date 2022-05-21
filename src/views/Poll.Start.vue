@@ -16,7 +16,7 @@
                         <h3>Кол-во прошедших: {{ alreadyPast }}</h3>
                         <h3>Автор: {{ authors }}</h3>
                     </div>
-                    <img src="https://cdn.discordapp.com/attachments/917528169374961725/977186991701635122/t72mMIzGO7fD4JB8pVgWm5NGTVNo1lehTEnshct0M9n-8Oqv7p30z5JMZTxp6LhAQhjJXIH5EcEvf6NYkVGWNEAA.jpg">
+                    <img src="https://cdn.discordapp.com/attachments/917528169374961725/977632208384827402/msedge_fGg5mmHERW.jpg">
                 </div>
             </div>
         </div>

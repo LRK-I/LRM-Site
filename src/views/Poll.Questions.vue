@@ -49,7 +49,7 @@ export default {
     error: ''
   }),
   async mounted() {
-    if (!this.$store.getters.user) return window.location.href = 'https://senko-info.ga/authorize';
+    if (!this.$store.getters.user) return window.location.href = `https://senko-info.ga/authorize?redirect_url=/poll/${this.$route.params.id}`;
     const pollInfoRaw = await fetch(`https://senko.ga/api/poll/${this.$route.params.id}`);
     const dataRaw = await fetch(`https://senko.ga/api/poll/${this.$route.params.id}/question/${this.$route.params.question}`);
     const pollInfo = await pollInfoRaw.json();

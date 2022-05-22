@@ -6,7 +6,7 @@
                     <h2>Опрос: {{ name }}</h2>
                     <br><br>
                     <transition name="fade" mode="out-in">
-                        <ButtonComponent @click="start" :key="message" :text="!message ? 'Происходит валидация...' : message" :bstyle="style"/>
+                        <ButtonComponent @click="start" :key="message" :text="!message ? 'Загрузка...' : message" :bstyle="style"/>
                     </transition>
                 </div>
                 <div class="pollLeft">
@@ -69,7 +69,7 @@ export default {
     }
   },
   async mounted() {
-    if (!this.$store.getters.user) return window.location.href = 'https://senko-info.ga/authorize';
+    if (!this.$store.getters.user) return window.location.href = `https://senko-info.ga/authorize?redirect_url=/poll/${this.$route.params.id}`;
     const request = await fetch(`https://senko.ga/api/poll/${this.$route.params.id}`);
     const data = await request.json();
     if (data.message === 'Опроса с таким айди нету') {

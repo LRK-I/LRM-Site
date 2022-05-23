@@ -57,9 +57,8 @@ export default {
     },
     async start() {
         if (!await this.validate()) return;
-        const data = await (await fetch(`https://senko.ga/api/poll/${this.$route.params.id}/start`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userToken: localStorage.getItem('userToken') }) })).json();
+        const data = await (await fetch(`https://senko.ga/api/poll/${this.$route.params.id}/start`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': localStorage.getItem('userToken') } })).json();
         if (data.granted) {
-            console.log(data);
             localStorage.setItem('token', data.token);
             localStorage.setItem('expireAt', data.expireTimestamp);
             localStorage.setItem('currentPoll', this.$route.params.id);

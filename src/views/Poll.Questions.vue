@@ -83,9 +83,9 @@ export default {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('userToken')
             },
             body: JSON.stringify({
-                userToken: localStorage.getItem('userToken'),
                 token: localStorage.getItem('token'),
                 answer: id,
             }),

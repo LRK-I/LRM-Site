@@ -9,7 +9,7 @@
 export default {
   name: 'PollEnd',
   async mounted() {
-    await fetch(`https://senko.ga/api/poll/${localStorage.getItem('currentPoll')}/end`, {
+    const req = await fetch(`https://senko.ga/api/poll/${localStorage.getItem('currentPoll')}/end`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -19,6 +19,8 @@ export default {
         token: localStorage.getItem('token')
       }),
     });
+
+    const data = await req.json();
 
     localStorage.removeItem('expireAt');
     localStorage.removeItem('token');

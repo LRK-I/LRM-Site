@@ -49,7 +49,7 @@ export default {
     error: ''
   }),
   async mounted() {
-    if (!this.$store.getters.user) return window.location.href = `https://senko-info.ga/authorize?redirect_url=/poll/${this.$route.params.id}`;
+    if (!this.$store.getters.user) return window.location.href = `https://senko-info.ga/authorize`;
     const pollInfoRaw = await fetch(`https://senko.ga/api/poll/${this.$route.params.id}`);
     const dataRaw = await fetch(`https://senko.ga/api/poll/${this.$route.params.id}/question/${this.$route.params.question}`);
 
@@ -66,7 +66,6 @@ export default {
         this.$router.push('/404');
         return;
     }
-    console.log(this.allQuestions);
     if (this.$route.params.question >= this.allQuestions) {
         return this.$router.push('/poll/end');
     }
@@ -85,7 +84,6 @@ export default {
   },
   methods: {
     async answerClick(event, id) {
-        console.log(id);
         if (!this.answers[id]) return;
         const data = await (await fetch(`https://senko.ga/api/poll/${this.$route.params.id}/reply/${this.$route.params.question}`, {
             method: 'POST',
@@ -99,11 +97,9 @@ export default {
             }),
         })).json();
         if (data.ok) {
-            console.log('ok');
             this.$router.push(`/poll/${this.$route.params.id}/question/${+(this.$route.params.question)+1}`);
         } else {
             this.error = data.message;
-            console.log(`/poll/${this.$route.params.id}/question/${+(this.$route.params.question)+1}`)
             if(data.message === 'На этот вопрос уже был дан ответ') this.$router.push(`/poll/${this.$route.params.id}/question/${+(this.$route.params.question)+1}`);
         }
     }

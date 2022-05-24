@@ -68,13 +68,13 @@ export default {
     }
   },
   async mounted() {
-    if (!this.$store.getters.user) return window.location.href = `https://senko-info.ga/authorize?redirect_url=/poll/${this.$route.params.id}`;
+    if (!this.$store.getters.user) return window.location.href = `https://senko-info.ga/authorize`;
     const request = await fetch(`https://senko.ga/api/poll/${this.$route.params.id}`);
-    const data = await request.json();
-    if (data.message === 'Опроса с таким айди нету') {
+    if (data.status === 404) {
         this.$router.push('/404');
         return;
     }
+    const data = await request.json();
     this.name = data.name;
     this.questionsNum = data.questions;
     this.isAnonymous = data.anon;

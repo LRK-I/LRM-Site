@@ -15,7 +15,6 @@ export default {
     },
     methods: {
         whoeta() {
-            console.log(this.inputed);
             this.$emit('newText', this.inputed);
         }
     }

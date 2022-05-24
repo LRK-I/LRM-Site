@@ -38,7 +38,6 @@ export default {
     const request = await fetch('https://senko.ga/api/founders');
     const data = await request.json();
     this.founders = data;
-    console.log(data);
   }
 }
 </script>

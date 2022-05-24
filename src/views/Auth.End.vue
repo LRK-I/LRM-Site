@@ -2,7 +2,7 @@
   <div>
     <div class="home container" style="text-align: center;">
       <h1>Авторизация успешна</h1>
-      <h3>Через 10 секунд вы будете перемещены на главную страницу</h3>
+      <h3>Через 5 секунд вы будете перемещены на главную страницу</h3>
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
             this.$router.push('/').then(() => {
                 window.location.reload();
             });
-        }, 10000);
+        }, 5000);
     }
 }
 </script>
